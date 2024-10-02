@@ -15,8 +15,9 @@ public class TeamBattle extends Battle {
     }
 
     @Override
-    public void startBattle() {
-        System.out.println("Починається командний бій!");
+    public String startBattle() {
+        StringBuilder battleLog = new StringBuilder();
+        battleLog.append("Починається командний бій!\n");
 
         Random random = new Random();
 
@@ -26,28 +27,31 @@ public class TeamBattle extends Battle {
 
             if (attacker1.isAlive() && attacker2.isAlive()) {
                 attacker1.attack(attacker2);
+                battleLog.append(attacker1.getName()).append(" атакує ").append(attacker2.getName()).append(". ")
+                        .append(attacker2.getName()).append(" залишилось ").append(attacker2.getHealth()).append(" здоров'я.\n");
+
                 if (attacker2.isAlive()) {
                     attacker2.attack(attacker1);
+                    battleLog.append(attacker2.getName()).append(" атакує ").append(attacker1.getName()).append(". ")
+                            .append(attacker1.getName()).append(" залишилось ").append(attacker1.getHealth()).append(" здоров'я.\n");
                 }
             }
 
-            printTeamHealth(team1, "Команда 1");
-            printTeamHealth(team2, "Команда 2");
+            team1.removeIf(droid -> !droid.isAlive());
+            team2.removeIf(droid -> !droid.isAlive());
         }
 
         if (teamIsAlive(team1)) {
-            System.out.println("Команда 1 виграла!");
+            battleLog.append("Команда 1 виграла!\n");
         } else {
-            System.out.println("Команда 2 виграла!");
+            battleLog.append("Команда 2 виграла!\n");
         }
+
+        System.out.println(battleLog.toString());
+        return battleLog.toString();
     }
 
     private boolean teamIsAlive(List<Droid> team) {
         return team.stream().anyMatch(Droid::isAlive);
-    }
-
-    private void printTeamHealth(List<Droid> team, String teamName) {
-        System.out.println(teamName + " стан:");
-        team.forEach(droid -> System.out.println(droid.getName() + " здоров'я: " + droid.getHealth()));
     }
 }

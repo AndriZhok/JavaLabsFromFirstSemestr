@@ -12,23 +12,29 @@ public class OneOnOneBattle extends Battle {
     }
 
     @Override
-    public void startBattle() {
-        System.out.println("Бій між " + droid1.getName() + " та " + droid2.getName() + " починається!");
+    public String startBattle() {
+        StringBuilder battleLog = new StringBuilder();
+        battleLog.append("Бій 1 на 1 між ").append(droid1.getName()).append(" і ").append(droid2.getName()).append("!\n");
 
         while (droid1.isAlive() && droid2.isAlive()) {
             droid1.attack(droid2);
+            battleLog.append(droid1.getName()).append(" атакує ").append(droid2.getName()).append(". ")
+                    .append(droid2.getName()).append(" залишилось ").append(droid2.getHealth()).append(" здоров'я.\n");
+
             if (droid2.isAlive()) {
                 droid2.attack(droid1);
+                battleLog.append(droid2.getName()).append(" атакує ").append(droid1.getName()).append(". ")
+                        .append(droid1.getName()).append(" залишилось ").append(droid1.getHealth()).append(" здоров'я.\n");
             }
-
-            System.out.println(droid1.getName() + " здоров'я: " + droid1.getHealth());
-            System.out.println(droid2.getName() + " здоров'я: " + droid2.getHealth());
         }
 
         if (droid1.isAlive()) {
-            System.out.println(droid1.getName() + " виграв!");
+            battleLog.append(droid1.getName()).append(" виграв бій!\n");
         } else {
-            System.out.println(droid2.getName() + " виграв!");
+            battleLog.append(droid2.getName()).append(" виграв бій!\n");
         }
+
+        System.out.println(battleLog.toString());
+        return battleLog.toString();
     }
 }

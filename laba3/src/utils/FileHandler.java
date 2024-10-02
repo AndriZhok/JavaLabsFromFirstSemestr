@@ -1,27 +1,32 @@
 package utils;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class FileHandler {
-
-    public static void saveBattleLog(String fileName, String log) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-            writer.write(log);
+    // Метод для збереження бою у файл
+    public static void saveToFile(String filename, String content) {
+        try (FileWriter writer = new FileWriter(filename)) {
+            writer.write(content);
+            System.out.println("Бій збережено у файл " + filename);
         } catch (IOException e) {
-            System.out.println("Помилка під час запису у файл.");
+            System.out.println("Помилка запису у файл: " + e.getMessage());
         }
     }
 
-    public static String loadBattleLog(String fileName) {
-        StringBuilder log = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+    // Метод для завантаження бою з файлу
+    public static String loadFromFile(String filename) {
+        StringBuilder content = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                log.append(line).append("\n");
+                content.append(line).append("\n");
             }
         } catch (IOException e) {
-            System.out.println("Помилка під час читання з файлу.");
+            System.out.println("Помилка читання з файлу: " + e.getMessage());
         }
-        return log.toString();
+        return content.toString();
     }
 }
