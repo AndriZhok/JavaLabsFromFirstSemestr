@@ -31,5 +31,8 @@ public abstract class Droid {
         return health > 0;
     }
 
-    public abstract void attack(Droid opponent);
+    public void restoreHealth() {
+        // Реалізуйте логіку для відновлення здоров'я дроїда, якщо потрібно
+        this.health = 100; // Приклад: відновити здоров'я до 100
+    }
 }

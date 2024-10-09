@@ -17,15 +17,21 @@ public class OneOnOneBattle extends Battle {
         battleLog.append("Бій 1 на 1 між ").append(droid1.getName()).append(" і ").append(droid2.getName()).append("!\n");
 
         while (droid1.isAlive() && droid2.isAlive()) {
-            droid1.attack(droid2);
+            // Діалог атаки дроїда 1
+            attack(droid1, droid2);
+
             battleLog.append(droid1.getName()).append(" атакує ").append(droid2.getName()).append(". ")
                     .append(droid2.getName()).append(" залишилось ").append(droid2.getHealth()).append(" здоров'я.\n");
 
-            if (droid2.isAlive()) {
-                droid2.attack(droid1);
-                battleLog.append(droid2.getName()).append(" атакує ").append(droid1.getName()).append(". ")
-                        .append(droid1.getName()).append(" залишилось ").append(droid1.getHealth()).append(" здоров'я.\n");
+            if (!droid2.isAlive()) {
+                break; // Завершуємо бій, якщо дроїд 2 мертвий
             }
+
+            // Діалог атаки дроїда 2
+            attack(droid2, droid1);
+
+            battleLog.append(droid2.getName()).append(" атакує ").append(droid1.getName()).append(". ")
+                    .append(droid1.getName()).append(" залишилось ").append(droid1.getHealth()).append(" здоров'я.\n");
         }
 
         if (droid1.isAlive()) {
